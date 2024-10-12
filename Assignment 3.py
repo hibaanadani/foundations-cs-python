@@ -1,7 +1,3 @@
-import sys
-from hashlib import file_digest
-
-
 def returnDigits(n):
     digit=1
     if n<10:
