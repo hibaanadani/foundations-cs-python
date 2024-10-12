@@ -20,18 +20,22 @@ def returnMax(arr):
        # Recursive case: Compare the first element with the maximum in the rest of the list
        return arr[0] if arr[0] > max else max
 
-def countTag(code, tag):
-    count = 0
-    tokens = code.split("<")
-    for token in tokens:
-        parts = token.strip().split(">")
-        if len(parts) > 1:
-            # Extract the tag name
-            current_tag = parts[0]
-            if current_tag == tag or current_tag.startswith(f"/{tag}"):
-                    count += 1
-    return count
 
+def countTag(code, tag):
+    if not code:
+        return 0
+    # Find the opening tag
+    open_tag = f"<{tag}>"
+    close_tag = f"</{tag}>"
+    start_index = code.find(open_tag)
+    end_index = code.find(close_tag)
+
+    # If either the opening or closing tag is not found, return 0
+    if start_index == -1 or end_index == -1:
+        return 0
+
+    # Recursively count the occurrences of the tag in the remaining HTML
+    return 1 + countTag(code[end_index+len(close_tag):],tag)
 
 x=int(input("enter a number from 1 to 4 where:1. Count Digits 2. Find Max 3. Count Tags 4. Exit"))
 while 1>x or x>4:
